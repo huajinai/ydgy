@@ -1,0 +1,713 @@
+{
+	"format_version": "1.13.0",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "minecraft:player",
+			"is_spawnable": false,
+			"is_summonable": false,
+			"is_experimental": false,
+			"scripts": {
+				"animate": [
+					"light",
+					"chain_gather"
+				]
+			},
+			"animations": {
+				"light": "controller.animation.light",
+				"chain_gather": "controller.animation.chain_gather"
+			}
+		},
+		"component_groups": {
+			"yangzii:light_run": {
+				"minecraft:is_saddled": {
+				}
+			},
+			"yangzii:chain_default": {
+				"minecraft:variant": {
+					"value": 0
+				},
+				"minecraft:mark_variant": {
+					"value": 0
+				}
+			},
+			"yangzii:chain_log_run": {
+				"minecraft:variant": {
+					"value": 1
+				}
+			},
+			"yangzii:chain_ore_run": {
+				"minecraft:variant": {
+					"value": 2
+				}
+			},
+			"yangzii:chain_timer": {
+				"minecraft:mark_variant": {
+					"value": 1
+				},
+				"minecraft:timer": {
+					"looping": false,
+					"randomInterval": false,
+					"time": 1.0,
+					"time_down_event": {
+						"event": "yangzii:remove_chain_timer",
+						"target": "self"
+					}
+				}
+			},
+			"laser_mode": {
+				"minecraft:type_family": {
+					"family": [
+						"player",
+						"laser"
+					]
+				}
+			},
+			"common_mode": {
+				"minecraft:type_family": {
+					"family": [
+						"player"
+					]
+				}
+			},
+			"minecraft:add_bad_omen": {
+				"minecraft:spell_effects": {
+					"add_effects": [
+						{
+							"effect": "bad_omen",
+							"duration": 6000,
+							"display_on_screen_animation": true
+						}
+					]
+				},
+				"minecraft:timer": {
+					"time": [ 0.0, 0.0 ],
+					"looping": false,
+					"time_down_event": {
+						"event": "minecraft:clear_add_bad_omen",
+						"target": "self"
+					}
+				}
+			},
+			"minecraft:clear_bad_omen_spell_effect": {
+				"minecraft:spell_effects": {
+				}
+			},
+			"minecraft:raid_trigger": {
+				"minecraft:raid_trigger": {
+					"triggered_event": {
+						"event": "minecraft:remove_raid_trigger",
+						"target": "self"
+					}
+				},
+				"minecraft:spell_effects": {
+					"remove_effects": "bad_omen"
+				}
+			}
+		},
+		"components": {
+			"minecraft:experience_reward": {
+				"on_death": "Math.Min(query.player_level * 7, 100)"
+			},
+			"minecraft:is_hidden_when_invisible": {
+			},
+			"minecraft:hurt_on_condition": {
+				"damage_conditions": [
+					{
+						"filters": { "test": "in_lava", "subject": "self", "operator": "==", "value": true },
+						"cause": "lava",
+						"damage_per_tick": 4
+					}
+				]
+			},
+			"minecraft:pushable": {
+				"is_pushable": false,
+				"is_pushable_by_piston": true
+			},
+			"minecraft:type_family": {
+				"family": [ "player" ]
+			},
+			"minecraft:loot": {
+				"table": "loot_tables/empty.json"
+			},
+			"minecraft:collision_box": {
+				"width": 0.6,
+				"height": 1.8
+			},
+			"minecraft:can_climb": {
+			},
+			"minecraft:movement": {
+				"value": 0.1
+			},
+			"minecraft:attack": {
+				"damage": 1
+			},
+			"minecraft:player.saturation": {
+				"value": 20
+			},
+			"minecraft:player.exhaustion": {
+				"value": 0,
+				"max": 4
+			},
+			"minecraft:player.level": {
+				"value": 0,
+				"max": 24791
+			},
+			"minecraft:player.experience": {
+				"value": 0,
+				"max": 1
+			},
+			"minecraft:breathable": {
+				"totalSupply": 15,
+				"suffocateTime": -1,
+				"inhaleTime": 3.75,
+				"generatesBubbles": false
+			},
+			"minecraft:nameable": {
+				"alwaysShow": true,
+				"allowNameTagRenaming": false
+			},
+			"minecraft:physics": {
+			},
+			"minecraft:insomnia": {
+				"days_until_insomnia": 3
+			},
+			"minecraft:rideable": {
+				"seat_count": 2,
+				"family_types": [
+					"parrot_tame"
+				],
+				"pull_in_entities": true,
+				"seats": [
+					{
+						"position": [ 0.4, -0.15, 0.04 ],
+						"min_rider_count": 0,
+						"max_rider_count": 0,
+						"lock_rider_rotation": 0
+					},
+					{
+						"position": [ -0.4, -0.15, 0.04 ],
+						"min_rider_count": 1,
+						"max_rider_count": 2,
+						"lock_rider_rotation": 0
+					}
+				]
+			},
+			"minecraft:scaffolding_climber": {},
+			"minecraft:environment_sensor": {
+				"triggers": [
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_component",
+									"operator": "!=",
+									"value": "minecraft:is_saddled"
+								},
+								{
+									"any_of": [
+										{
+											"test": "has_equipment",
+											"value": "enchanting_table"
+										},
+										{
+											"test": "has_equipment",
+											"value": "glowstone"
+										},
+										{
+											"test": "has_equipment",
+											"value": "sealantern"
+										},
+										{
+											"test": "has_equipment",
+											"value": "beacon"
+										},
+										{
+											"test": "has_equipment",
+											"value": "conduit"
+										},
+										{
+											"test": "has_equipment",
+											"value": "end_rod"
+										},
+										{
+											"test": "has_equipment",
+											"domain": "head",
+											"value": "golden_helmet"
+										},
+										{
+											"all_of": [
+												{
+													"test": "in_water",
+													"operator": "!="
+												},
+												{
+													"any_of": [
+														{
+															"test": "has_equipment",
+															"value": "torch"
+														},
+														{
+															"test": "has_equipment",
+															"value": "lantern"
+														},
+														{
+															"test": "has_equipment",
+															"value": "campfire"
+														},
+														{
+															"test": "has_equipment",
+															"value": "bucket:10"
+														},
+														{
+															"test": "has_equipment",
+															"value": "redstone_torch"
+														},
+														{
+															"test": "has_equipment",
+															"value": "lit_pumpkin"
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						"event": "yangzii:add_light"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_component",
+									"value": "minecraft:is_saddled"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"domain": "head",
+									"value": "golden_helmet"
+								},
+								{
+									"any_of": [
+										{
+											"all_of": [
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "torch"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "lantern"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "campfire"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "enchanting_table"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "glowstone"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "sealantern"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "bucket:10"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "beacon"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "conduit"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "end_rod"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "redstone_torch"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "lit_pumpkin"
+												}
+											]
+										},
+										{
+											"all_of": [
+												{
+													"test": "in_water"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "enchanting_table"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "glowstone"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "sealantern"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "beacon"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "conduit"
+												},
+												{
+													"test": "has_equipment",
+													"operator": "!=",
+													"value": "end_rod"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						"event": "yangzii:remove_light"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_variant",
+									"value": 0
+								},
+								{
+									"any_of": [
+										{
+											"test": "has_equipment",
+											"value": "diamond_axe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "golden_axe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "iron_axe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "stone_axe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "wooden_axe"
+										}
+									]
+								}
+							]
+						},
+						"event": "yangzii:add_chain_log"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_variant",
+									"value": 1
+								},
+								{
+									"test": "is_mark_variant",
+									"value": 0
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "diamond_axe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "golden_axe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "iron_axe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "stone_axe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "wooden_axe"
+								}
+							]
+						},
+						"event": "yangzii:add_chain_timer"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_variant",
+									"value": 0
+								},
+								{
+									"any_of": [
+										{
+											"test": "has_equipment",
+											"value": "diamond_pickaxe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "golden_pickaxe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "iron_pickaxe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "stone_pickaxe"
+										},
+										{
+											"test": "has_equipment",
+											"value": "wooden_pickaxe"
+										}
+									]
+								}
+							]
+						},
+						"event": "yangzii:add_chain_ore"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_variant",
+									"value": 2
+								},
+								{
+									"test": "is_mark_variant",
+									"value": 0
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "diamond_pickaxe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "golden_pickaxe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "iron_pickaxe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "stone_pickaxe"
+								},
+								{
+									"test": "has_equipment",
+									"operator": "!=",
+									"value": "wooden_pickaxe"
+								}
+							]
+						},
+						"event": "yangzii:add_chain_timer"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_sneaking",
+									"subject": "self",
+									"operator": "!=",
+									"value": true
+								}
+							]
+						},
+						"event": "laser_mode"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "is_sneaking",
+									"subject": "self"
+								},
+								{
+									"test": "on_ground",
+									"subject": "self"
+								},
+								{
+									"test": "is_moving",
+									"subject": "self",
+									"operator": "!="
+								}
+							]
+						},
+						"event": "common_mode"
+					},
+					{
+						"filters": {
+							"all_of": [
+								{
+									"test": "has_mob_effect",
+									"subject": "self",
+									"value": "bad_omen"
+								},
+								{
+									"test": "is_in_village",
+									"subject": "self",
+									"value": true
+								}
+							]
+						},
+						"event": "minecraft:trigger_raid"
+					}
+				]
+			}
+		},
+		"events": {
+			"yangzii:add_light": {
+				"add": {
+					"component_groups": [ "yangzii:light_run" ]
+				}
+			},
+			"yangzii:remove_light": {
+				"remove": {
+					"component_groups": [ "yangzii:light_run" ]
+				}
+			},
+			"yangzii:add_chain_timer": {
+				"add": {
+					"component_groups": [ "yangzii:chain_timer" ]
+				}
+			},
+			"yangzii:remove_chain_timer": {
+				"remove": {
+					"component_groups": [
+						"yangzii:chain_timer",
+						"yangzii:chain_log_run",
+						"yangzii:chain_ore_run"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"yangzii:chain_default"
+					]
+				}
+			},
+			"yangzii:add_chain_log": {
+				"remove": {
+					"component_groups": [
+						"yangzii:chain_default"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"yangzii:chain_log_run"
+					]
+				}
+			},
+			"yangzii:add_chain_ore": {
+				"remove": {
+					"component_groups": [
+						"yangzii:chain_default"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"yangzii:chain_ore_run"
+					]
+				}
+			},
+			"common_mode": {
+				"remove": {
+					"component_groups": [
+						"laser_mode"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"common_mode"
+					]
+				}
+			},
+			"laser_mode": {
+				"remove": {
+					"component_groups": [
+						"common_mode"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"laser_mode"
+					]
+				}
+			},
+			"minecraft:gain_bad_omen": {
+				"add": {
+					"component_groups": [
+						"minecraft:add_bad_omen"
+					]
+				}
+			},
+			"minecraft:clear_add_bad_omen": {
+				"remove": {
+					"component_groups": [
+						"minecraft:add_bad_omen"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"minecraft:clear_bad_omen_spell_effect"
+					]
+				}
+			},
+			"minecraft:trigger_raid": {
+				"add": {
+					"component_groups": [ "minecraft:raid_trigger" ]
+				}
+			},
+			"minecraft:remove_raid_trigger": {
+				"remove": {
+					"component_groups": [ "minecraft:raid_trigger" ]
+				}
+			}
+		}
+	}
+}

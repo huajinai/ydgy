@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "§b支持多达12种光源+金头盔，根据物理特性部分光源在水下会熄灭。§a佩戴金头盔时请不要进行任何传送类操作，如有遗留光源使用任意方块填充可清除§e§lBy:Yangzii",
+        "name": "§e§l移动光源1.13+",
+        "uuid": "c8673b76-1f28-4b54-b4da-06a6d0a8418c",
+		"min_engine_version": [1, 13, 0],
+        "version": [0, 0, 1]
+    },
+    "modules": [
+        {
+            "description": "§e§lBy:Yangzii",
+			"type": "data",
+            "uuid": "817a013c-74f7-4643-9744-a596f03356b4",
+            "version": [0, 0, 1]
+        }
+    ]
+}

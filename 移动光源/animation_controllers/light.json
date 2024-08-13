@@ -1,0 +1,48 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.light": {
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"add_light_0": "query.is_saddled"
+						}
+					],
+					"on_entry": [
+						"/function light_remove"
+					],
+					"on_exit": [
+						"/function light_load"
+					]
+				},
+				"add_light_0": {
+					"transitions": [
+						{
+							"default": "!query.is_saddled"
+						},
+						{
+							"add_light_1": "query.is_saddled"
+						}
+					],
+					"on_entry": [
+						"/function light_add"
+					]
+				},
+				"add_light_1": {
+					"transitions": [
+						{
+							"default": "!query.is_saddled"
+						},
+						{
+							"add_light_0": "query.is_saddled"
+						}
+					],
+					"on_entry": [
+						"/function light_add"
+					]
+				}
+			}
+		}
+	}
+}
